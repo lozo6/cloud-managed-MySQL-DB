@@ -42,3 +42,5 @@ REAL CPT Values that are older: https://gist.github.com/lieldulev/439793dc3c5a66
 # How to set up MySQL and ERD
 
 I will be using Microsoft Azure for the assignment but this can also be done using Google Cloud Platform
+
+First we will check the dependencies for MySQL (i.e. if more RAM or Storage is needed to run the program)
