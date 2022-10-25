@@ -46,11 +46,8 @@ REAL CPT Values that are older: https://gist.github.com/lieldulev/439793dc3c5a66
 
 ```yaml
 AZURE_MYSQL_HOSTNAME = "insert here"
-
 AZURE_MYSQL_USERNAME = "insert here"
-
 AZURE_MYSQL_PASSWORD = "insert here"
-
 AZURE_MYSQL_DATABASE = "insert here"
 ```
 
