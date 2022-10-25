@@ -1,6 +1,4 @@
-import dbm
 import pandas as pd
-import sqlalchemy as sa
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 import os
@@ -8,6 +6,7 @@ from faker import Faker
 import uuid
 import random
 
+load_dotenv()
 # stored sensitive information in a .env file
 AZURE_MYSQL_HOSTNAME = os.getenv("AZURE_MYSQL_HOSTNAME")
 AZURE_MYSQL_USER = os.getenv("AZURE_MYSQL_USERNAME")
