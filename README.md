@@ -39,8 +39,42 @@ LOINC: https://www.findacode.com/loinc/LG41762-2--socialdeterminantsofhealth.htm
 
 REAL CPT Values that are older: https://gist.github.com/lieldulev/439793dc3c5a6613b661c33d71fdd185
 
-# How to set up MySQL and ERD
+# How to set up
+
+
+## You will need to use a `.env` file with this information to utilize dotenv module
+
+AZURE_MYSQL_HOSTNAME = ""
+
+AZURE_MYSQL_USERNAME = ""
+
+AZURE_MYSQL_PASSWORD = ""
+
+AZURE_MYSQL_DATABASE = ""
+
+
+## How to set up Virtual Cloud Environment
 
 I will be using Microsoft Azure for the assignment but this can also be done using Google Cloud Platform
 
-First we will check the dependencies for MySQL (i.e. if more RAM or Storage is needed to run the program)
+Create a Virtual Machine (VM) with minimum requirements for installing MySQL in Linux environment (Ubuntu)
+
+1. Use sudo apt-get update and sudo apt install python3-pip # to install all dependencies in Ubuntu OS
+
+2. Use sudo apt install mysql-server mysql-client # to install MySQL in Ubuntu OS
+
+3. Use sudo mysql # to login using administrative privileges
+
+4. To add administrative users to Virtual Machine: CREATE USER 'lozo'@'%' IDENTIFIED BY 'lozoAHI2023!';
+
+    SELECT user FROM mysql.user; # shows a list of all users in Ubuntu OS
+
+    GRANT ALL PRIVILEGES ON *.* TO 'lozo'@'%'; # grants all admin privileges to user
+
+    To test use '$ mysql -u lozo -p' and enter the password: lozoAHI2023!
+
+5. Please Add Inbound Port Rule to allow port '3306' to connect to help MySQL server
+
+6. Use sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf and change 'bind_address' from 127.0.0.1 to 0.0.0.0
+
+7. Please refer to main.py for adding data into MySQL
