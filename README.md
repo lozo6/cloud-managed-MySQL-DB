@@ -44,13 +44,15 @@ REAL CPT Values that are older: https://gist.github.com/lieldulev/439793dc3c5a66
 
 ## You will need to use a `.env` file with this information to utilize dotenv module
 
-AZURE_MYSQL_HOSTNAME = ""
+```yaml
+AZURE_MYSQL_HOSTNAME = "insert here"
 
-AZURE_MYSQL_USERNAME = ""
+AZURE_MYSQL_USERNAME = "insert here"
 
-AZURE_MYSQL_PASSWORD = ""
+AZURE_MYSQL_PASSWORD = "insert here"
 
-AZURE_MYSQL_DATABASE = ""
+AZURE_MYSQL_DATABASE = "insert here"
+```
 
 
 ## How to set up Virtual Cloud Environment
