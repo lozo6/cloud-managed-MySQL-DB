@@ -102,7 +102,7 @@ for index, row in ndc_codes_1k.iterrows():
 df = pd.read_sql_query("SELECT * FROM medications", db)
 
 
-# Treatments
+# Treatments and Procedures
 insertQuery = "INSERT INTO treatment_procedures (cpt, description) VALUES (%s, %s)"
 medRowCount = 0 
 for index, row in cpt_codes_1k.iterrows():
@@ -148,7 +148,7 @@ for index, row in df_patient_conditions.iterrows():
 
 df = pd.read_sql_query("SELECT * FROM patient_conditions", db)
 
-## Patient Treatment 
+## Patient Treatment and Procedures
 df_treatment_procedures = pd.read_sql_query("SELECT cpt FROM treatment_procedures", db)
 df_patients = pd.read_sql_query("SELECT mrn FROM patients", db)
 

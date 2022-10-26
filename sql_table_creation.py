@@ -68,7 +68,7 @@ create table if not exists medications (
 ); 
 """
 
-table_treatments = """
+table_treatments_procedures = """
 create table if not exists treatment_procedures (
     id int auto_increment,
     cpt varchar(255) null unique,

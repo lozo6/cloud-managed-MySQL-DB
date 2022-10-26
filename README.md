@@ -45,10 +45,10 @@ REAL CPT Values that are older: https://gist.github.com/lieldulev/439793dc3c5a66
 ## You will need to use a `.env` file with this information to utilize dotenv module
 
 ```yaml
-AZURE_MYSQL_HOSTNAME = "insert here"
-AZURE_MYSQL_USERNAME = "insert here"
-AZURE_MYSQL_PASSWORD = "insert here"
-AZURE_MYSQL_DATABASE = "insert here"
+AZURE_MYSQL_HOSTNAME = "ip address"
+AZURE_MYSQL_USERNAME = "root"
+AZURE_MYSQL_PASSWORD = "password"
+AZURE_MYSQL_DATABASE = "database"
 ```
 
 
@@ -59,3 +59,21 @@ I will be using Microsoft Azure for the assignment but this can also be done usi
 Create a Azure Database for MySQL flexible server:
 
 Please make sure to have `require_secure_transport = OFF`
+
+
+## Resources used
+
+NDC Codes: https://raw.githubusercontent.com/hantswilliams/FDA_NDC_CODES/main/NDC_2022_product.csv
+
+ICD-10 Codes: https://raw.githubusercontent.com/Bobrovskiy/ICD-10-CSV/master/2020/diagnosis.csv
+
+CPT Codes: https://gist.githubusercontent.com/lieldulev/439793dc3c5a6613b661c33d71fdd185/raw/25c3abcc5c24e640a0a5da1ee04198a824bf58fa/cpt4.csv
+
+LOINC Codes: https://loinc.org/downloads/
+
+
+## Softwares Used
+
+VSCode, MySQL Workbench, Microsoft Azure
+
+Alt: PyCharm, PopSQL, GCP/AWS
