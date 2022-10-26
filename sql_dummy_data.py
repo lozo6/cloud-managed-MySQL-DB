@@ -125,12 +125,10 @@ for index, row in loinccodesShort_1k.iterrows():
     ## stop once we have 100 rows
     if startingRow == 100:
         break
-
 df = pd.read_sql_query("SELECT * FROM social_determinants", db)
 
 
 ## Patient Conditions
-
 df_conditions = pd.read_sql_query("SELECT icd10 FROM conditions", db)
 df_patients = pd.read_sql_query("SELECT mrn FROM patients", db)
 
@@ -149,3 +147,44 @@ for index, row in df_patient_conditions.iterrows():
     print("inserted row: ", index)
 
 df = pd.read_sql_query("SELECT * FROM patient_conditions", db)
+
+## Patient Treatment 
+df_treatment_procedures = pd.read_sql_query("SELECT cpt FROM treatment_procedures", db)
+df_patients = pd.read_sql_query("SELECT mrn FROM patients", db)
+
+df_patient_treatment_procedures = pd.DataFrame(columns=['mrn', 'cpt'])
+for index, row in df_patients.iterrows():
+    df_treatment_procedures_sample = df_treatment_procedures.sample(n=random.randint(1, 5))
+    df_treatment_procedures_sample['mrn'] = row['mrn']
+    df_patient_treatment_procedures = df_patient_treatment_procedures.append(df_treatment_procedures_sample)
+
+print(df_patient_treatment_procedures.head(20))
+
+insertQuery = "INSERT INTO patient_treatment_procedures (mrn, cpt) VALUES (%s, %s)"
+
+for index, row in df_patient_treatment_procedures.iterrows():
+    db.execute(insertQuery, (row['mrn'], row['cpt']))
+    print("inserted row: ", index)
+
+df = pd.read_sql_query("SELECT * FROM patient_treatment_procedures", db)
+
+## Patient Social Determinants
+
+df_social_determinants = pd.read_sql_query("SELECT loinc FROM social_determinants", db)
+df_patients = pd.read_sql_query("SELECT mrn FROM patients", db)
+
+df_patient_social_determinants = pd.DataFrame(columns=['mrn', 'loinc'])
+for index, row in df_patients.iterrows():
+    df_social_determinants_sample = df_social_determinants.sample(n=random.randint(1, 5))
+    df_social_determinants_sample['mrn'] = row['mrn']
+    df_patient_social_determinants = df_patient_social_determinants.append(df_social_determinants_sample)
+
+print(df_patient_social_determinants.head(20))
+
+insertQuery = "INSERT INTO patient_social_determinants (mrn, loinc) VALUES (%s, %s)"
+
+for index, row in df_patient_social_determinants.iterrows():
+    db.execute(insertQuery, (row['mrn'], row['loinc']))
+    print("inserted row: ", index)
+
+df = pd.read_sql_query("SELECT * FROM patient_social_determinants", db)
