@@ -56,24 +56,6 @@ AZURE_MYSQL_DATABASE = "insert here"
 
 I will be using Microsoft Azure for the assignment but this can also be done using Google Cloud Platform
 
-Create a Virtual Machine (VM) with minimum requirements for installing MySQL in Linux environment (Ubuntu)
+Create a Azure Database for MySQL flexible server:
 
-1. Use sudo apt-get update and sudo apt install python3-pip # to install all dependencies in Ubuntu OS
-
-2. Use sudo apt install mysql-server mysql-client # to install MySQL in Ubuntu OS
-
-3. Use sudo mysql # to login using administrative privileges
-
-4. To add administrative users to Virtual Machine: CREATE USER 'lozo'@'%' IDENTIFIED BY 'lozoAHI2023!';
-
-    SELECT user FROM mysql.user; # shows a list of all users in Ubuntu OS
-
-    GRANT ALL PRIVILEGES ON *.* TO 'lozo'@'%'; # grants all admin privileges to user
-
-    To test use '$ mysql -u lozo -p' and enter the password: lozoAHI2023!
-
-5. Please Add Inbound Port Rule to allow port '3306' to connect to help MySQL server
-
-6. Use sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf and change 'bind_address' from 127.0.0.1 to 0.0.0.0
-
-7. Please refer to main.py for adding data into MySQL
+Please make sure to have `require_secure_transport = OFF`

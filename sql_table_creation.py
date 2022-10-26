@@ -1,3 +1,5 @@
+import pandas as pd
+import sqlalchemy as sa
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 import os
@@ -28,14 +30,21 @@ AZURE_MYSQL_DATABASE = os.getenv("AZURE_MYSQL_DATABASE")
 connection_string_azure = f'mysql+pymysql://{AZURE_MYSQL_USER}:{AZURE_MYSQL_PASSWORD}@{AZURE_MYSQL_HOSTNAME}:3306/{AZURE_MYSQL_DATABASE}'
 db = create_engine(connection_string_azure)
 
-tableNames_azure = db.table_names()
+disable_foreign_key = """
+SET FOREIGN_KEY_CHECKS=0
+;
+"""
+reenable_foreign_key = """
+SET FOREIGN_KEY_CHECKS=1
+;
+"""
+db.execute(disable_foreign_key)
+droppingFunction_all(db.table_names(), db)
+db.execute(reenable_foreign_key)
+print(db.table_names())
 
-tableNames_azure = ['production_patient_conditions', 'production_patient_medications', 'production_medications', 'production_patients', 'production_conditions']
-
-droppingFunction_all(tableNames_azure, db)
-
-table_prod_patients = """
-create table if not exists production_patients (
+table_patients = """
+create table if not exists patients (
     id int auto_increment,
     mrn varchar(255) default null unique,
     first_name varchar(255) default null,
@@ -49,56 +58,96 @@ create table if not exists production_patients (
 ); 
 """
 
-table_prod_medications = """
-create table if not exists production_medications (
+table_medications = """
+create table if not exists medications (
     id int auto_increment,
-    med_ndc varchar(255) default null unique,
-    med_human_name varchar(255) default null,
-    med_is_dangerous varchar(255) default null,
-    PRIMARY KEY (id)
-); 
-"""
-
-table_prod_conditions = """
-create table if not exists production_conditions (
-    id int auto_increment,
-    icd10_code varchar(255) default null unique,
-    icd10_description varchar(255) default null,
+    ndc varchar(255) null unique,
+    generic varchar(255) default null,
+    active_ingredients varchar(255) default null,
     PRIMARY KEY (id) 
 ); 
 """
 
-table_prod_patients_medications = """
-create table if not exists production_patient_medications (
+table_treatments = """
+create table if not exists treatment_procedures (
     id int auto_increment,
-    mrn varchar(255) default null,
-    med_ndc varchar(255) default null,
-    PRIMARY KEY (id),
-    FOREIGN KEY (mrn) REFERENCES production_patients(mrn) ON DELETE CASCADE,
-    FOREIGN KEY (med_ndc) REFERENCES production_medications(med_ndc) ON DELETE CASCADE
+    cpt varchar(255) null unique,
+    description varchar(255) default null,
+    PRIMARY KEY (id)
 ); 
 """
 
-table_prod_patient_conditions = """
-create table if not exists production_patient_conditions (
+table_conditions = """
+create table if not exists conditions (
     id int auto_increment,
-    mrn varchar(255) default null,
-    icd10_code varchar(255) default null,
-    PRIMARY KEY (id),
-    FOREIGN KEY (mrn) REFERENCES production_patients(mrn) ON DELETE CASCADE,
-    FOREIGN KEY (icd10_code) REFERENCES production_conditions(icd10_code) ON DELETE CASCADE
+    icd10 varchar(255) null unique,
+    description varchar(255) default null,
+    PRIMARY KEY (id) 
 ); 
 """
 
-db.execute(table_prod_patients)
-db.execute(table_prod_medications)
-db.execute(table_prod_conditions)
-db.execute(table_prod_patients_medications)
-db.execute(table_prod_patient_conditions)
+table_social_determinants = """
+create table if not exists social_determinants (
+    id int auto_increment,
+    loinc varchar(255) null unique,
+    description varchar(255) default null,
+    PRIMARY KEY (id) 
+); 
+"""
 
-azure_tables = db.table_names()
+table_patient_medications = """
+create table if not exists patient_medications (
+    id int auto_increment,
+    mrn varchar(255) default null,
+    ndc varchar(255) default null,
+    PRIMARY KEY (id),
+    FOREIGN KEY (mrn) REFERENCES patients(mrn) ON DELETE CASCADE,
+    FOREIGN KEY (ndc) REFERENCES medications(ndc) ON DELETE CASCADE
+); 
+"""
 
-droppingFunction_limited(azure_tables, db)
+table_patient_conditions = """
+create table if not exists patient_conditions (
+    id int auto_increment,
+    mrn varchar(255) default null,
+    icd10 varchar(255) default null,
+    PRIMARY KEY (id),
+    FOREIGN KEY (mrn) REFERENCES patients(mrn) ON DELETE CASCADE,
+    FOREIGN KEY (icd10) REFERENCES conditions(icd10) ON DELETE CASCADE
+); 
+"""
+
+table_patient_social_determinants = """
+create table if not exists patient_social_determinants (
+    id int auto_increment,
+    mrn varchar(255) default null,
+    loinc varchar(255) default null,
+    PRIMARY KEY (id),
+    FOREIGN KEY (mrn) REFERENCES patients(mrn) ON DELETE CASCADE,
+    FOREIGN KEY (loinc) REFERENCES social_determinants(loinc) ON DELETE CASCADE
+); 
+"""
+
+table_patient_treatments = """
+create table if not exists patient_treatment_procedures (
+    id int auto_increment,
+    mrn varchar(255) default null,
+    cpt varchar(255) default null,
+    PRIMARY KEY (id),
+    FOREIGN KEY (mrn) REFERENCES patients(mrn) ON DELETE CASCADE,
+    FOREIGN KEY (cpt) REFERENCES treatment_procedures(cpt) ON DELETE CASCADE
+); 
+"""
+
+db.execute(table_patients)
+db.execute(table_medications)
+db.execute(table_treatments)
+db.execute(table_conditions)
+db.execute(table_social_determinants)
+db.execute(table_patient_medications)
+db.execute(table_patient_treatments)
+db.execute(table_patient_conditions)
+db.execute(table_patient_social_determinants)
 
 # confirm if script is working
-azure_tables = db.table_names()
+print(db.table_names())
