@@ -70,10 +70,3 @@ ICD-10 Codes: https://raw.githubusercontent.com/Bobrovskiy/ICD-10-CSV/master/202
 CPT Codes: https://gist.githubusercontent.com/lieldulev/439793dc3c5a6613b661c33d71fdd185/raw/25c3abcc5c24e640a0a5da1ee04198a824bf58fa/cpt4.csv
 
 LOINC Codes: https://loinc.org/downloads/
-
-
-## Softwares Used
-
-VSCode, MySQL Workbench, Microsoft Azure
-
-Alt: PyCharm, PopSQL, GCP/AWS
