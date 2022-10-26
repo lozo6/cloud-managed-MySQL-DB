@@ -141,7 +141,7 @@ create table if not exists patient_treatment_procedures (
 
 db.execute(table_patients)
 db.execute(table_medications)
-db.execute(table_treatments)
+db.execute(table_treatments_procedures)
 db.execute(table_conditions)
 db.execute(table_social_determinants)
 db.execute(table_patient_medications)
